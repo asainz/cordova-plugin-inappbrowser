@@ -34,6 +34,8 @@
 
 #pragma mark CDVInAppBrowser
 
+static CDVInAppBrowserViewController *sharedInApp = nil;
+
 @interface CDVInAppBrowser () {
     NSInteger _previousStatusBarStyle;
 }
@@ -458,6 +460,12 @@
 
 @synthesize currentURL;
 
++ (id)sharedInAppBrowser
+{
+    NSAssert(sharedInApp, @"FATAL ERROR!!!");
+    return sharedInApp;
+}
+
 - (id)initWithUserAgent:(NSString*)userAgent prevUserAgent:(NSString*)prevUserAgent browserOptions: (CDVInAppBrowserOptions*) browserOptions
 {
     self = [super init];
@@ -472,6 +480,7 @@
 #endif
         
         [self createViews];
+        sharedInApp = self;
     }
 
     return self;
